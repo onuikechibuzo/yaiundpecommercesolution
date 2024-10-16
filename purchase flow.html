@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>E-Commerce Purchase Flow Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        .section {
+            background: #fff;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .section h2 {
+            margin-top: 0;
+        }
+
+        input, select, button {
+            padding: 8px;
+            margin: 5px 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .btn-purchase {
+            background-color: #007bff;
+            padding: 5px 10px;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+
+        .btn-purchase:hover {
+            background-color: #0069d9;
+        }
+
+        .btn-confirm {
+            background-color: #ffc107;
+            padding: 5px 10px;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+
+        .btn-confirm:hover {
+            background-color: #e0a800;
+        }
+
+        .success {
+            color: green;
+            margin-top: 10px;
+        }
+
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+
+        .logout {
+            background-color: #dc3545;
+            margin-top: 10px;
+        }
+
+        .logout:hover {
+            background-color: #c82333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1>E-Commerce Purchase Flow Demo</h1>
+
+    <!-- Seller Section -->
+    <div class="section" id="seller-section">
+        <h2>Seller Dashboard</h2>
+        
+        <!-- Add Product Form -->
+        <h3>Add New Product</h3>
+        <form id="add-product-form">
+            <div class="form-group">
+                <label>Product Name:</label>
+                <input type="text" id="product-name" required>
+            </div>
+            <div class="form-group">
+                <label>Price ($):</label>
+                <input type="number" id="product-price" step="0.01" required>
+            </div>
+            <button type="submit">Add Product</button>
+        </form>
+        <div id="add-product-message"></div>
+
+        <!-- View Products -->
+        <h3>Your Products</h3>
+        <table id="seller-products-table">
+            <thead>
+                <tr>
+                    <th>Product ID</th>
+                    <th>Name</th>
+                    <th>Price ($)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Seller's products will be populated here -->
+            </tbody>
+        </table>
+
+        <!-- View Released Payments -->
+        <h3>Released Payments</h3>
+        <table id="seller-payments-table">
+            <thead>
+                <tr>
+                    <th>Transaction ID</th>
+                    <th>Product Name</th>
+                    <th>Amount ($)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Released payments will be populated here -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Buyer Section -->
+    <div class="section" id="buyer-section">
+        <h2>Buyer Dashboard</h2>
+        
+        <!-- Purchase Product -->
+        <h3>Purchase a Product</h3>
+        <form id="purchase-form">
+            <div class="form-group">
+                <label>Select Product:</label>
+                <select id="purchase-product" required>
+                    <!-- Available products will be populated here -->
+                </select>
+            </div>
+            <button type="submit">Purchase</button>
+        </form>
+        <div id="purchase-message"></div>
+
+        <!-- View Purchases -->
+        <h3>Your Purchases</h3>
+        <table id="buyer-purchases-table">
+            <thead>
+                <tr>
+                    <th>Transaction ID</th>
+                    <th>Product Name</th>
+                    <th>Amount ($)</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Buyer's purchases will be populated here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Data Storage
+        let products = [
+            {id: 'p1', name: 'Laptop', price: '1000.00', sellerId: 'seller1'},
+            {id: 'p2', name: 'Smartphone', price: '500.00', sellerId: 'seller1'},
+            {id: 'p3', name: 'Headphones', price: '150.00', sellerId: 'seller1'}
+        ];
+
+        let transactions = [
+            {id: 't1', productId: 'p1', buyerId: 'buyer1', status: 'Released'},
+            {id: 't2', productId: 'p2', buyerId: 'buyer1', status: 'Pending'}
+        ];
+
+        // Assuming single seller and buyer for simplicity
+        const sellerId = 'seller1';
+        const buyerId = 'buyer1';
+
+        // DOM Elements
+        const addProductForm = document.getElementById('add-product-form');
+        const productNameInput = document.getElementById('product-name');
+        const productPriceInput = document.getElementById('product-price');
+        const addProductMessage = document.getElementById('add-product-message');
+
+        const sellerProductsTableBody = document.querySelector('#seller-products-table tbody');
+        const sellerPaymentsTableBody = document.querySelector('#seller-payments-table tbody');
+
+        const purchaseForm = document.getElementById('purchase-form');
+        const purchaseProductSelect = document.getElementById('purchase-product');
+        const purchaseMessage = document.getElementById('purchase-message');
+
+        const buyerPurchasesTableBody = document.querySelector('#buyer-purchases-table tbody');
+
+        // Function to generate unique IDs
+        function generateId(prefix) {
+            return prefix + '-' + Math.random().toString(36).substr(2, 9);
+        }
+
+        // Add Product Handler
+        addProductForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = productNameInput.value.trim();
+            const price = parseFloat(productPriceInput.value).toFixed(2);
+
+            if (name === '' || isNaN(price) || price <= 0) {
+                addProductMessage.textContent = 'Please enter valid product details.';
+                addProductMessage.className = 'error';
+                return;
+            }
+
+            const product = {
+                id: generateId('p'),
+                name: name,
+                price: price,
+                sellerId: sellerId
+            };
+            products.push(product);
+            addProductMessage.textContent = 'Product added successfully!';
+            addProductMessage.className = 'success';
+            addProductForm.reset();
+            renderSellerProducts();
+            populateBuyerProducts();
+        });
+
+        // Render Seller's Products
+        function renderSellerProducts() {
+            sellerProductsTableBody.innerHTML = '';
+            const sellerProducts = products.filter(p => p.sellerId === sellerId);
+            sellerProducts.forEach(product => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${product.id}</td>
+                    <td>${product.name}</td>
+                    <td>${product.price}</td>
+                `;
+                sellerProductsTableBody.appendChild(tr);
+            });
+        }
+
+        // Render Seller's Released Payments
+        function renderSellerPayments() {
+            sellerPaymentsTableBody.innerHTML = '';
+            const releasedTransactions = transactions.filter(t => t.status === 'Released' && products.find(p => p.id === t.productId).sellerId === sellerId);
+            releasedTransactions.forEach(txn => {
+                const product = products.find(p => p.id === txn.productId);
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${txn.id}</td>
+                    <td>${product.name}</td>
+                    <td>${product.price}</td>
+                `;
+                sellerPaymentsTableBody.appendChild(tr);
+            });
+        }
+
+        // Populate Buyer Products Dropdown
+        function populateBuyerProducts() {
+            purchaseProductSelect.innerHTML = '';
+            products.forEach(product => {
+                const option = document.createElement('option');
+                option.value = product.id;
+                option.textContent = `${product.name} - $${product.price}`;
+                purchaseProductSelect.appendChild(option);
+            });
+        }
+
+        // Purchase Product Handler
+        purchaseForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const selectedProductId = purchaseProductSelect.value;
+            if (!selectedProductId) {
+                purchaseMessage.textContent = 'Please select a product to purchase.';
+                purchaseMessage.className = 'error';
+                return;
+            }
+
+            const transaction = {
+                id: generateId('t'),
+                productId: selectedProductId,
+                buyerId: buyerId,
+                status: 'Pending'
+            };
+            transactions.push(transaction);
+            purchaseMessage.textContent = 'Purchase successful! Payment is held until delivery is confirmed.';
+            purchaseMessage.className = 'success';
+            renderBuyerPurchases();
+            renderSellerPayments();
+        });
+
+        // Render Buyer's Purchases
+        function renderBuyerPurchases() {
+            buyerPurchasesTableBody.innerHTML = '';
+            const buyerTransactions = transactions.filter(t => t.buyerId === buyerId);
+            buyerTransactions.forEach(txn => {
+                const product = products.find(p => p.id === txn.productId);
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${txn.id}</td>
+                    <td>${product.name}</td>
+                    <td>${product.price}</td>
+                    <td>${txn.status}</td>
+                    <td>
+                        ${txn.status === 'Pending' ? `<button class="btn-confirm" onclick="confirmDelivery('${txn.id}')">Confirm Delivery</button>` : ''}
+                    </td>
+                `;
+                buyerPurchasesTableBody.appendChild(tr);
+            });
+        }
+
+        // Confirm Delivery Handler
+        function confirmDelivery(transactionId) {
+            const transaction = transactions.find(t => t.id === transactionId && t.buyerId === buyerId);
+            if (transaction && transaction.status === 'Pending') {
+                transaction.status = 'Released';
+                renderBuyerPurchases();
+                renderSellerPayments();
+                alert('Delivery confirmed! Payment has been released to the seller.');
+            }
+        }
+
+        // Initial Render with Pre-Populated Data
+        renderSellerProducts();
+        renderSellerPayments();
+        populateBuyerProducts();
+        renderBuyerPurchases();
+    </script>
+</body>
+</html>
