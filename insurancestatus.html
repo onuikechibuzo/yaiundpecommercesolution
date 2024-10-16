@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Store Insurance Information</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        .section {
+            background: #fff;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .section h2 {
+            margin-top: 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .insure-status {
+            color: green;
+            font-weight: bold;
+        }
+
+        .not-insured {
+            color: red;
+            font-weight: bold;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .badge img {
+            width: 16px;
+            height: 16px;
+            margin-left: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Online Store Insurance Status</h1>
+
+    <div class="section" id="store-section">
+        <h2>Registered Stores</h2>
+        <p>Below is a list of online stores and their insurance status, showing which stores have deposited an amount to prove their authenticity on the platform.</p>
+
+        <table id="store-table">
+            <thead>
+                <tr>
+                    <th>Store ID</th>
+                    <th>Store Name</th>
+                    <th>Deposit Amount ($)</th>
+                    <th>Insurance Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Store information will be populated here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Example store data (some insured, some not)
+        let stores = [
+            { id: 's1', name: 'Tech Haven', deposit: 5000, insured: true },
+            { id: 's2', name: 'Fashion Forward', deposit: 0, insured: false },
+            { id: 's3', name: 'Home Comfort', deposit: 3000, insured: true },
+            { id: 's4', name: 'Gadget Galaxy', deposit: 0, insured: false },
+            { id: 's5', name: 'Food Express', deposit: 4000, insured: true }
+        ];
+
+        const storeTableBody = document.querySelector('#store-table tbody');
+
+        // Render store insurance information
+        function renderStoreInformation() {
+            storeTableBody.innerHTML = '';
+            stores.forEach(store => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${store.id}</td>
+                    <td>${store.name}</td>
+                    <td>$${store.deposit.toFixed(2)}</td>
+                    <td class="badge ${store.insured ? 'insure-status' : 'not-insured'}">
+                        ${store.insured ? 'Insured' : 'Not Insured'}
+                        <img src="${store.insured ? 'https://img.icons8.com/color/48/000000/checked.png' : 'https://img.icons8.com/color/48/000000/cancel--v1.png'}" alt="${store.insured ? 'Insured' : 'Not Insured'} Badge">
+                    </td>
+                `;
+                storeTableBody.appendChild(tr);
+            });
+        }
+
+        // Initial render
+        renderStoreInformation();
+    </script>
+</body>
+</html>
