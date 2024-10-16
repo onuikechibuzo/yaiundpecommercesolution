@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce Open Data & Investment Portal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #007bff;
+            padding: 20px;
+            color: white;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        h2, h3 {
+            color: #333;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        .section {
+            background: #fff;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .section h2 {
+            margin-top: 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .btn {
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 15px;
+            border-radius: 5px;
+        }
+
+        .btn:hover {
+            background-color: #218838;
+        }
+
+        .btn-invest {
+            background-color: #007bff;
+        }
+
+        .btn-invest:hover {
+            background-color: #0069d9;
+        }
+
+        .chart {
+            width: 100%;
+            height: 400px;
+            background-color: #f4f4f4;
+            margin-top: 20px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <h1>E-Commerce Open Data & Investment Portal</h1>
+        <p>Your Gateway to Market Insights and Investment Opportunities</p>
+    </header>
+
+    <div class="container">
+
+        <!-- Section: Open Data -->
+        <div class="section">
+            <h2>Open E-Commerce Data for Investors & Researchers</h2>
+            <p>Our e-commerce platform provides open access to data, allowing investors and researchers to study market trends, store performance, and customer preferences.</p>
+
+            <h3>Available Data:</h3>
+            <ul>
+                <li>Product Listings (Prices, Availability)</li>
+                <li>Store Performance Data</li>
+                <li>Market Trends and Product Scarcity</li>
+                <li>Automated Tax Payment Reports</li>
+                <li>Customer Preferences and Purchase Trends</li>
+            </ul>
+
+            <h3>View Data</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Store Name</th>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Availability</th>
+                        <th>Performance Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Tech Haven</td>
+                        <td>Laptop</td>
+                        <td>$1000</td>
+                        <td>In Stock</td>
+                        <td>4.7</td>
+                    </tr>
+                    <tr>
+                        <td>Fashion Forward</td>
+                        <td>Dress</td>
+                        <td>$120</td>
+                        <td>Low Stock</td>
+                        <td>4.5</td>
+                    </tr>
+                    <!-- More data rows -->
+                </tbody>
+            </table>
+
+            <button class="btn">Download Full Data</button>
+        </div>
+
+        <!-- Section: Data Analysis Tools -->
+        <div class="section">
+            <h2>Advanced Data Analysis Tools</h2>
+            <p>Our platform uses AI-driven machine learning algorithms for better product searches, price comparisons, and decision-making in purchasing.</p>
+
+            <h3>Search for the Best Price</h3>
+            <input type="text" placeholder="Search for products..." style="width: 100%; padding: 10px; margin: 10px 0;">
+
+            <h3>Market Trends & Price Comparisons</h3>
+            <div class="chart" id="price-chart">
+                <canvas id="priceCanvas" width="600" height="400"></canvas>
+            </div>
+
+            <h3>Scarcity & Availability Awareness</h3>
+            <div class="chart" id="scarcity-chart">
+                <canvas id="scarcityCanvas" width="600" height="400"></canvas>
+            </div>
+
+            <button class="btn">Run Advanced Search</button>
+        </div>
+
+        <!-- Section: Investors Contact Stores -->
+        <div class="section">
+            <h2>Investors: Contact Stores Directly</h2>
+            <p>Analyze store performance and reach out to store owners directly for investment opportunities. Use our open data to make informed decisions before investing.</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Store Name</th>
+                        <th>Owner Contact</th>
+                        <th>Performance Score</th>
+                        <th>Investment Interest</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Tech Haven</td>
+                        <td>contact@techhaven.com</td>
+                        <td>4.7</td>
+                        <td><button class="btn btn-invest">Contact for Investment</button></td>
+                    </tr>
+                    <tr>
+                        <td>Fashion Forward</td>
+                        <td>info@fashionforward.com</td>
+                        <td>4.5</td>
+                        <td><button class="btn btn-invest">Contact for Investment</button></td>
+                    </tr>
+                    <!-- More data rows -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Section: Automated Tax Payment -->
+        <div class="section">
+            <h2>Automated Tax Payment</h2>
+            <p>Our platform integrates automated tax payment processing for all transactions, ensuring smooth and timely compliance for stores.</p>
+
+            <h3>Tax Payment Reports</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Store Name</th>
+                        <th>Tax Amount</th>
+                        <th>Last Payment Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Tech Haven</td>
+                        <td>$500</td>
+                        <td>2024-09-15</td>
+                        <td>Paid</td>
+                    </tr>
+                    <tr>
+                        <td>Fashion Forward</td>
+                        <td>$120</td>
+                        <td>2024-09-20</td>
+                        <td>Pending</td>
+                    </tr>
+                    <!-- More data rows -->
+                </tbody>
+            </table>
+
+            <button class="btn">Download Tax Report</button>
+        </div>
+
+    </div>
+
+    <script>
+        // Sample data for the charts
+        const productPrices = [1000, 120, 300, 450, 700]; // Prices for the price chart
+        const productNames = ['Laptop', 'Dress', 'Shoes', 'Watch', 'Phone']; // Product names
+        const storeNames = ['Tech Haven', 'Fashion Forward', 'Gadget World', 'Style Boutique', 'Smart Devices']; // Store names
+        const availability = [80, 30, 50, 20, 60]; // Availability percentages for the scarcity chart
+
+        // Draw Price Comparison Chart
+        function drawPriceChart() {
+            const priceCanvas = document.getElementById('priceCanvas');
+            const priceCtx = priceCanvas.getContext('2d');
+
+            priceCtx.clearRect(0, 0, priceCanvas.width, priceCanvas.height);
+            priceCtx.fillStyle = "#4caf50";  // Bar color for price
+            productPrices.forEach((price, index) => {
+                const barHeight = price * 0.4;  // Scale the height for visibility
+                priceCtx.fillRect(100 + index * 100, 400 - barHeight, 50, barHeight);
+                priceCtx.fillStyle = "#000";
+                priceCtx.fillText(productNames[index], 100 + index * 100, 420);
+                priceCtx.fillText(`$${price}`, 100 + index * 100, 400 - barHeight - 10);
+            });
+        }
+
+        // Draw Scarcity Analysis Chart
+        function drawScarcityChart() {
+            const scarcityCanvas = document.getElementById('scarcityCanvas');
+            const scarcityCtx = scarcityCanvas.getContext('2d');
+
+            scarcityCtx.clearRect(0, 0, scarcityCanvas.width, scarcityCanvas.height);
+            scarcityCtx.fillStyle = "#ff6347";  // Bar color for scarcity
+            availability.forEach((avail, index) => {
+                const barHeight = avail * 3;  // Scale the height for visibility
+                scarcityCtx.fillRect(100 + index * 100, 350 - barHeight, 50, barHeight);
+                scarcityCtx.fillStyle = "#000";
+                scarcityCtx.fillText(storeNames[index], 100 + index * 100, 370);
+                scarcityCtx.fillText(`${avail}%`, 100 + index * 100, 350 - barHeight - 10);
+            });
+        }
+
+        // Initial drawing of charts
+        window.onload = function () {
+            drawPriceChart();
+            drawScarcityChart();
+        }
+    </script>
+
+</body>
+</html>
